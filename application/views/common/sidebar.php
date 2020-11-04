@@ -36,6 +36,7 @@
         <li><a href="<?php echo base_url()."kelas";?>">Data Kelas</a></li>
         <li><a href="<?php echo base_url()."ruangan";?>">Data Ruangan</a></li>
         <li><a href="<?php echo base_url()."kurikulum" ?>">Data Kurikulum</a></li>
+        <li><a href="<?php echo base_url()."Kelompok_mapel";?>">Data Kelompok Mapel</a></li>
         <li><a href="<?php echo base_url()."mapel";?>">Data Mata Pelajaran</a></li>
         <li><a href="<?php echo base_url()."nilai_kkm";?>">Data Nilai KKM</a></li>
         <li><a href="<?php echo base_url()."jam" ?>">Data Jam KBM</a></li>
