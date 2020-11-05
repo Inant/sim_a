@@ -64,7 +64,7 @@
     <li> <a href="<?php echo base_url()."walikelas" ?>"class="waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-user"></i><span class="hide-menu">Data Wali Kelas</span></a>
 
     </li>
-    <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-book"></i><span class="hide-menu">Jadwal MaPel</span></a>
+    <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-book"></i><span class="hide-menu">Jadwal MaPel</span></a></li>
       <ul aria-expanded="false" class="collapse">
         <li><a href="university-courses.html">All Courses</a></li>
         <li><a href="university-add-course.html">Add Course</a></li>
@@ -79,7 +79,7 @@
         <li><a href="university-edit-asset.html">Edit Library Asset</a></li>
       </ul>
     </li> -->
-    <li> <a href="<?php echo base_url()."Absensi" ?>"class="waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-note"></i><span class="hide-menu">Absensi</span></a>
+    <li> <a href="<?php echo base_url()."Absensi" ?>"class="waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-note"></i><span class="hide-menu">Absensi</span></a></li>
     <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="fa fa-building"></i><span class="hide-menu">Rapot</span></a>
       <ul aria-expanded="false" class="collapse">
         <li><a href="university-departments.html">Departments</a></li>
