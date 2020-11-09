@@ -11,6 +11,14 @@ class M_siswa extends CI_Model
   {
     return $this->db->get_where($this->_table, $where)->result();
   }
+  
+  function getSiswaByRombel($where)
+  {
+    $this->db->select('nisn, nama_siswa'); 
+    $this->db->from($this->_table);   
+    $this->db->where('id_rombel', $where);
+    return $this->db->get()->result();
+  }
 
   public function countSiswa($where){
     return $this->db->get_where($this->_tabel,$where)->num_rows();

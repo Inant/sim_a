@@ -9,15 +9,21 @@ class Absensi extends CI_Controller {
     $this->load->model('M_kelas');
     $this->load->model('M_rombel');
     $this->load->model('M_siswa');
+    $this->load->model('M_mapel');
     // $this->load->model('M_jadwal_pelajaran');
   }
   public function index()
   {
-    $data['title']="Absensi";
-    $data['absensi']=$this->M_absensi->getAbsensi();
+    $data['title']="Input Absensi Siswa";
+    // $data['absensi']=$this->M_absensi->getAbsensi();
     $data['kelas']=$this->M_kelas->getKelas();
     $data['rombel']=$this->M_rombel->getJoinRombel();
-    $data['siswa']=$this->M_siswa->getSiswa();
+    $data['mapel']=$this->M_mapel->getMapel();
+    $data['siswa'] = '';
+    if (isset($_GET['kelas']) && isset($_GET['rombel']) && isset($_GET['mapel']) && isset($_GET['tanggal'])) {
+      $data['siswa'] = $this->db->query("SELECT nisn,nama_siswa FROM siswa WHERE id_rombel = '$_GET[rombel]'")->result();
+    }
+
     // $data['jadwalPelajaran']=$this->M_jadwal_pelajaran->getJadwalPelajaran();
     $this->load->view('common/head');
     $this->load->view('common/topbar');
@@ -38,27 +44,32 @@ class Absensi extends CI_Controller {
       // ['field' => 'id_jadwalPelajaran',
       // 'label' => 'Rombel',
       // 'rules' => 'required'],
-      ['field' => 'nisn',
-      'label' => 'NISN',
-      'rules' => 'required'],
-      ['field' => 'ket',
-      'label' => 'Keterangan',
-      'rules' => 'required'],
       ['field' => 'tanggal_absen',
       'label' => 'Tanggal Absen',
       'rules' => 'required'],
     ];
     $this->form_validation->set_rules($rules);
     if ($this->form_validation->run()==TRUE){
-      $data=[
-        'id_kelas'=>$this->input->post("id_kelas"),
-        'id_kelasRombel'=>$this->input->post("id_kelasRombel"),
-        'id_jadwalPelajaran'=>1,
-        'nisn'=>$this->input->post("nisn"),
-        'ket'=>$this->input->post("ket"),
-        'tanggal_absen'=>$this->input->post("tanggal_absen"),
-      ];
-      $this->M_absensi->addAbsensi($data);
+
+      $allSiswa = $_POST['nisn'];
+      $allAbsen = $_POST['ket'];
+
+      foreach ($allSiswa as $key => $value) {
+        $data=[
+          'id_kelas'=>$this->input->post("id_kelas"),
+          'id_kelasRombel'=>$this->input->post("id_kelasRombel"),
+          'id_jadwalPelajaran'=>1,
+          'nisn'=>$_POST['nisn'][$key],
+          'ket'=>$_POST['ket'][$key],
+          'tanggal_absen'=>$this->input->post("tanggal_absen"),
+        ];
+        $this->M_absensi->addAbsensi($data);
+      }
+      
+      // echo "<pre>";
+      // print_r ($_POST);
+      // echo "</pre>";
+      
       $this->session->set_flashdata("input_success", "<div class='alert alert-success'>
       <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data berhasil ditambahkan.<br></div>");
 
