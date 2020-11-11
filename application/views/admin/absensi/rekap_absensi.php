@@ -64,13 +64,6 @@
 
             <div class="col-md-6">
               <div class="form-group">
-                <label for="tanggal">Tanggal</label>
-                <input type="date" name="tanggal" id="tanggal" class="form-control" value="<?= isset($_GET['tanggal']) ? $_GET['tanggal'] : '' ?>" >
-              </div>
-            </div>
-
-            <div class="col-md-6">
-              <div class="form-group">
                 <label for="mapel">Mapel</label>
                 <select name="mapel" id="mapel" class="form-control">
                   <option value=""> --Pilih Mapel-- </option>
@@ -84,7 +77,7 @@
                 </select>
               </div>
             </div>
-            <div class="col-md-6"></div>
+            
             <div class="col-md-6">
               <button type="submit" class="btn btn-primary">Submit</button>
             </div>
@@ -93,49 +86,79 @@
         </form>
         
         <?php
-        if (isset($_GET['kelas']) && isset($_GET['rombel']) && isset($_GET['mapel']) && isset($_GET['tanggal'])) {
+        if (isset($_GET['kelas']) && isset($_GET['rombel']) && isset($_GET['mapel'])) {
+          
+          // echo "<pre>";
+          // print_r ($absen);
+          // echo "</pre>";
+          
         ?>
-        <form onsubmit="return validate(this);" action="<?php echo base_url(). 'Absensi/add'; ?>" method="post">
-          <input type="hidden" name="id_kelas" value="<?= $_GET['kelas'] ?>">
-          <input type="hidden" name="id_mapel" value="<?= $_GET['mapel'] ?>">
-          <input type="hidden" name="id_tahun_akademik" value="<?= $_GET['tahun_akademik'] ?>">
-          <input type="hidden" name="id_kelasRombel" value="<?= $_GET['rombel'] ?>">
-          <input type="hidden" name="tanggal_absen" value="<?= $_GET['tanggal'] ?>">
-          <div class="table-responsive">
-            <table id="myTable" class="table table-bordered" width="100%" cellspacing="0">
-              <thead>
+        <br>
+        <div class="table-responsive">
+          <table class="table table-striped table-hover table-bordered">
+            <thead>
+              <tr>
+                <th rowspan="2" style="vertical-align: middle;text-align:center">NISN</th>
+                <th rowspan="2" style="vertical-align: middle;text-align:center">Nama Siswa</th>
+                <th colspan="<?=$jumlah_pertemuan?>" style="vertical-align: middle;text-align:center">Pertemuan Ke</th>
+                <th rowspan="2" style="vertical-align: middle;text-align:center">Persentase Kehadiran</th>
+                <th colspan="4" style="vertical-align: middle;text-align:center">Total</th>
+              </tr>
+              <tr>
+                <?php
+                for ($i=1; $i <= $jumlah_pertemuan ; $i++) { 
+                  echo "<th style='vertical-align: middle;text-align:center'>$i</th>";
+                }
+                ?>
+                <th style="vertical-align: middle;text-align:center">H</th>
+                <th style="vertical-align: middle;text-align:center">I</th>
+                <th style="vertical-align: middle;text-align:center">S</th>
+                <th style="vertical-align: middle;text-align:center">A</th>
+              </tr>
+            </thead>
+            <tbody>
+              <?php
+              foreach ($siswa as $key => $value) {
+                $absensi = $this->M_absensi->getKetByNisn($value->nisn, $_GET['tahun_akademik'], $_GET['kelas'], $_GET['rombel'], $_GET['mapel']);
+                $jumlahHadir = 0;
+                $jumlahIjin = 0;
+                $jumlahSakit = 0;
+                $jumlahAlpha = 0;
+              ?>
                 <tr>
-                  <th>NISN</th>
-                  <th>Nama Siswa</th>
-                  <th>Keterangan</th>
-                </tr>
-              </thead>
-              <tbody>
-                
+                  <td><?=$value->nisn?></td>
+                  <td><?=$value->nama_siswa?></td>
                   <?php
-                  $i = 0;
-                  foreach ($siswa as $key => $value) {
-                  ?>
-                    <input type="text" class="hide" name="nisn[]" value="<?=$value->nisn?>">
-                    <tr>
-                      <td><?= $value->nisn ?></td>
-                      <td><?= $value->nama_siswa ?></td>
-                      <td>
-                        <input type="radio" name="ket[<?=$i?>]" id="H<?=$i?>" value="H"><label for="H<?=$i?>">&nbsp;Hadir</label> &nbsp;
-                        <input type="radio" name="ket[<?=$i?>]" id="I<?=$i?>" value="I"><label for="I<?=$i?>">&nbsp;Izin</label> &nbsp;
-                        <input type="radio" name="ket[<?=$i?>]" id="S<?=$i?>" value="S"><label for="S<?=$i?>">&nbsp;Sakit</label> &nbsp;
-                        <input type="radio" name="ket[<?=$i?>]" id="A<?=$i?>" value="A"><label for="A<?=$i?>">&nbsp;Alpha</label> &nbsp;
-                      </td>
-                    </tr>
-                  <?php
-                  $i++;
+                  foreach ($absensi as $keyKet => $valueKet) {
+                    
+                    if ($valueKet->ket == 'H') {
+                      $jumlahHadir += 1;
+                    }
+                    elseif ($valueKet->ket == 'I') {
+                      $jumlahIjin += 1;
+                    }
+                    elseif ($valueKet->ket == 'S') {
+                      $jumlahSakit += 1;
+                    }
+                    else{
+                      $jumlahAlpha += 1;
+                    }
+
+                    echo "<td>$valueKet->ket</td>";
                   }
                   ?>
-              </tbody>
-            </table>
-          </div>
-          <button type="submit" onclick="return confirm('Apakah anda yakin ?')" class="btn btn-success">Simpan</button>
-        </form>
+                  <td style="text-align: center;"><?= $jumlahHadir / $jumlah_pertemuan * 100 ?></td>
+                  <td><?= $jumlahHadir ?></td>
+                  <td><?= $jumlahIjin ?></td>
+                  <td><?= $jumlahSakit ?></td>
+                  <td><?= $jumlahAlpha ?></td>
+                </tr>
+              <?php
+              }
+              ?>
+            </tbody>
+          </table>
+        </div>
         <?php
         }
         ?>

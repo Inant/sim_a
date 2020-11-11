@@ -45,4 +45,10 @@ class M_absensi extends CI_Model
         }
     }
 
+    public function getKetByNisn($nisn, $tahun, $kelas, $rombel, $mapel)
+    {
+        $result = $this->db->query("SELECT ket FROM absensi WHERE nisn = '$nisn' AND id_kelas = '$kelas' AND id_kelasRombel = '$rombel' AND id_jadwalPelajaran = '$mapel' AND id_tahun_akademik = '$tahun'")->result();
+        return $result;
+    }
+
 }
