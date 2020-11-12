@@ -43,6 +43,7 @@
         <li><a href="<?php echo base_url()."spp" ?>">Data Spp</a></li>
         <li><a href="<?php echo base_url()."tanggungan" ?>">Data Tanggungan</a></li>
         <li><a href="<?php echo base_url()."tahun" ?>">Data Tahun Akademik</a></li>
+        <li><a href="<?php echo base_url()."kategori_nilai" ?>">Data Kategori Nilai</a></li>
       </ul>
     </li>
 
