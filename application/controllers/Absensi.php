@@ -23,7 +23,7 @@ class Absensi extends CI_Controller {
     $data['tahun_akademik']=$this->M_tahun->getTahun();
     $data['siswa'] = '';
     if (isset($_GET['kelas']) && isset($_GET['rombel']) && isset($_GET['mapel']) && isset($_GET['tanggal'])) {
-      $data['siswa'] = $this->db->query("SELECT nisn,nama_siswa FROM siswa WHERE id_rombel = '$_GET[rombel]'")->result();
+      $data['siswa'] = $this->db->query("SELECT nisn,nama_siswa FROM siswa WHERE id_kelasRombel = '$_GET[rombel]'")->result();
     }
 
     // $data['jadwalPelajaran']=$this->M_jadwal_pelajaran->getJadwalPelajaran();

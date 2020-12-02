@@ -76,6 +76,64 @@ $(document).ready(function() {
       }
     });
   });
+
+  // pembayaran spp
+  $('.hide').hide();
+
+  $('#nisn').change(function () { 
+      let url = $(this).data('url');
+      let nisn = $(this).val();
+
+      $.ajax({
+        type: "get",
+        url: url,
+        data: {nisn:nisn},
+        dataType: 'json',
+        success: function (response) {
+          $('#nama').val(response.nama_siswa);
+          $('#beasiswa').val(response.beasiswa);
+          $('#spp').val(response.id_spp);
+          $('#nominal_spp').val(response.nominal);
+        }
+      });
+  });
+
+  var beasiswa = parseInt($('#beasiswa').val());
+  var nominal_spp = parseInt($('#nominal_spp').val());
+  $('.bulan').click(function (e) {
+    let selectedMonth = $('input:checkbox:checked').length;
+    let totalBeasiswa = selectedMonth * beasiswa;
+    let total = selectedMonth * nominal_spp - totalBeasiswa;
+    $('#total').val(total);
+  });
+
+  $('#bayar').keyup(function (e) { 
+    let bayar = parseInt($(this).val());
+    let total = parseInt($('#total').val());
+
+    let kembalian = bayar - total;
+    $('#kembalian').val(kembalian);
+  });
+
+  // pembayaran
+  $('#form-spp').submit(function (e) {
+    let total = parseInt($('#total').val());
+    let bayar = parseInt($('#bayar').val());
+
+    if (total <= 0) {
+      alert('Total tidak boleh nol.')
+      e.preventDefault();
+    }
+    else if (bayar < total) {
+      alert('Jumlah bayar tidak boleh kurang dari total.')
+      e.preventDefault();
+    }
+    else{
+      $(e).unbind('submit');
+    }
+    
+  });
+
 });
 $('#example23').DataTable({
   dom: 'Bfrtip',

@@ -132,7 +132,7 @@
                       <td><?= $value->nisn ?></td>
                       <td><?= $value->nama_siswa ?></td>
                       <td>
-                        <input type="number" name="nilai[]" id="nilai" class="form-control">
+                        <input type="number" name="nilai[]" min="0" max="100" id="nilai" class="form-control" required>
                       </td>
                       <td>
                         <input type="text" name="ket[]" id="nilai" class="form-control">

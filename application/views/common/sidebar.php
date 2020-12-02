@@ -101,24 +101,7 @@
     <li class="nav-small-cap">--- Keuangan</li>
     <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-media-right-alt"></i><span class="hide-menu">SPP</span></a>
       <ul aria-expanded="false" class="collapse">
-        <li><a href="form-basic.html">Basic Forms</a></li>
-        <li><a href="form-layout.html">Form Layouts</a></li>
-        <li><a href="form-addons.html">Form Addons</a></li>
-        <li><a href="form-material.html">Form Material</a></li>
-        <li><a href="form-float-input.html">Floating Lable</a></li>
-        <li><a href="form-pickers.html">Form Pickers</a></li>
-        <li><a href="form-upload.html">File Upload</a></li>
-        <li><a href="form-mask.html">Form Mask</a></li>
-        <li><a href="form-validation.html">Form Validation</a></li>
-        <li><a href="form-dropzone.html">File Dropzone</a></li>
-        <li><a href="form-icheck.html">Icheck control</a></li>
-        <li><a href="form-img-cropper.html">Image Cropper</a></li>
-        <li><a href="form-bootstrapwysihtml5.html">HTML5 Editor</a></li>
-        <li><a href="form-typehead.html">Form Typehead</a></li>
-        <li><a href="form-wizard.html">Form Wizard</a></li>
-        <li><a href="form-xeditable.html">Xeditable Editor</a></li>
-        <li><a href="form-summernote.html">Summernote Editor</a></li>
-        <li><a href="form-tinymce.html">Tinymce Editor</a></li>
+        <li><a href="<?php echo base_url(). 'Pembayaran_spp' ?>">Pembayaran SPP</a></li>
       </ul>
     </li>
     <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-accordion-merged"></i><span class="hide-menu">Tanggungan</span></a>
