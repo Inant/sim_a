@@ -106,6 +106,13 @@ $(document).ready(function() {
     let total = selectedMonth * nominal_spp - totalBeasiswa;
     $('#total').val(total);
   });
+  
+  $('.edit_bulan').click(function (e) {
+    let selectedMonth = $('.edit_bulan:checked').length;
+    let totalBeasiswa = selectedMonth * beasiswa;
+    let total = selectedMonth * nominal_spp - totalBeasiswa;
+    $('#total').val(total);
+  });
 
   $('#bayar').keyup(function (e) { 
     let bayar = parseInt($(this).val());

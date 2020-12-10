@@ -25,7 +25,7 @@ class Nilai_siswa extends CI_Controller {
     $data['kategori_nilai']=$this->M_kategori_nilai->getKategoriNilai();
     $data['siswa'] = '';
     if (isset($_GET['kelas']) && isset($_GET['rombel']) && isset($_GET['mapel']) && isset($_GET['kategori_nilai'])) {
-      $data['siswa'] = $this->db->query("SELECT nisn,nama_siswa FROM siswa WHERE id_rombel = '$_GET[rombel]'")->result();
+      $data['siswa'] = $this->db->query("SELECT nisn,nama_siswa FROM siswa WHERE id_kelasRombel = '$_GET[rombel]'")->result();
     }
 
     // $data['jadwalPelajaran']=$this->M_jadwal_pelajaran->getJadwalPelajaran();
@@ -63,9 +63,21 @@ class Nilai_siswa extends CI_Controller {
     if ($this->form_validation->run()==TRUE){
 
       $allSiswa = $_POST['nisn'];
-      $allNilai = $_POST['nilai'];
 
       foreach ($allSiswa as $key => $value) {
+        $ket = '';
+        if ($_POST['nilai'][$key] <= 100 && $_POST['nilai'][$key] >= 95) {
+          $ket = 'Sangat Bagus, Pertahankan';
+        }
+        else if ($_POST['nilai'][$key] <= 94 && $_POST['nilai'][$key] >= 80) {
+          $ket = 'Bagus, dan lebih semangat belajar';
+        }
+        else if ($_POST['nilai'][$key] <= 79 && $_POST['nilai'][$key] >= 70) {
+          $ket = 'Cukup, belajar lebih giat lagi';
+        }
+        else if ($_POST['nilai'][$key] <= 69 && $_POST['nilai'][$key] >= 0) {
+          $ket = 'Kurang, belajar lebih giat lagi';
+        }
         $data=[
           'id_rombel'=>$this->input->post("id_rombel"),
           'nisn'=>$_POST['nisn'][$key],
@@ -73,7 +85,7 @@ class Nilai_siswa extends CI_Controller {
           'id_tahunAkademik'=>$this->input->post("id_tahunAkademik"),
           'nilai'=>$_POST['nilai'][$key],
           'id_kategoriNilai'=>$this->input->post("id_kategoriNilai"),
-          'ket'=>$_POST['ket'][$key],
+          'ket'=>$ket,
         ];
         $this->M_nilai->addNilai($data);
       }

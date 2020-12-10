@@ -61,7 +61,7 @@ class Pembayaran_spp extends CI_Controller {
     if ($this->form_validation->run()==TRUE){
 
       $pembayaran_spp = array(
-        'kode_pembayaran_spp' => 2,
+        'kode_pembayaran_spp' => 3,
         'nisn' => $_POST['nisn'],
         'id_spp' => $_POST['id_spp'],
         'id_tahun_akademik' => $_POST['id_tahun_akademik'],
@@ -76,7 +76,7 @@ class Pembayaran_spp extends CI_Controller {
 
       foreach ($bulan as $key => $value) {
         $data=[
-          'kode_pembayaran_spp' => 2,
+          'kode_pembayaran_spp' => 3,
           'bulan' => $_POST['bulan'][$key],
           'nominal' => $_POST['total'] / count($bulan)
         ];
@@ -93,47 +93,16 @@ class Pembayaran_spp extends CI_Controller {
     }
     redirect('Pembayaran_spp');
   }
-  function edit(){
-    $id_nilai = $this->input->post('id');
-    $data['nilai'] = $this->M_nilai->get1Absensi(array('id_nilai' => $id_nilai));
-    $data['kelas']=$this->M_kelas->getKelas();
-    $data['rombel']=$this->M_rombel->getJoinRombel();
-    $data['siswa']=$this->M_siswa->getSiswa();
-    // $data['jadwalPelajaran']=$this->M_jadwal_pelajaran->getJadwalPelajaran();
-    $this->load->view('admin/absensi/editAbsensi',$data);
-  }
 
-  function update(){
-
-    $id_absensi = $this->input->post('id_absensi',true);
-    $data = array(
-      'id_kelas'=>$this->input->post("id_kelas"),
-      'id_rombel'=>$this->input->post("id_rombel"),
-      'id_jadwalPelajaran'=>1,
-      'nisn'=>$this->input->post("nisn"),
-      'ket'=>$this->input->post("ket"),
-      'tanggal_absen'=>$this->input->post("tanggal_absen"),
-    );
-    $where = array(
-      'id_absensi' => $id_absensi,
-    );
-    $this->session->set_flashdata('message', 'Diubah !');
-    $this->M_absensi->updateAbsensi($where, $data, 'absensi');
-    redirect('Absensi');
-  }
-
-  public function rekap()
+  public function pembayaranPerSiswa()
   {
-    $data['title']="Rekap Nilai Siswa";
-    // $data['absensi']=$this->M_absensi->getAbsensi();
-    $data['kelas']=$this->M_kelas->getKelas();
-    $data['rombel']=$this->M_rombel->getJoinRombel();
-    // $data['mapel']=$this->M_mapel->getMapel();
-    // $data['tahun_akademik']=$this->M_tahun->getTahun();
-    // $data['kategori_nilai']=$this->M_kategori_nilai->getKategoriNilai();
-    $data['siswa'] = $this->db->query("SELECT nisn,nama_siswa FROM siswa")->result();
-    if (isset($_GET['kelas']) && isset($_GET['rombel']) && isset($_GET['nisn'])) {
-      $data['nilai'] = $this->M_nilai->getNilai($_GET['nisn'], $_GET['rombel']);
+    $data['title']="List Pembayaran SPP Per Siswa";
+    
+    // $data['kelas']=$this->M_kelas->getKelas();
+    $data['tahun_akademik']=$this->M_tahun->getTahun();
+    // $data['siswa'] = '';
+    if (isset($_GET['nisn']) && isset($_GET['tahun_akademik'])) {
+      $data['listPembayaran'] = $this->db->query("SELECT * FROM pembayaran_spp WHERE nisn = '$_GET[nisn]' AND id_tahun_akademik = '$_GET[tahun_akademik]' ")->result_array();
     }
 
     // $data['jadwalPelajaran']=$this->M_jadwal_pelajaran->getJadwalPelajaran();
@@ -141,7 +110,115 @@ class Pembayaran_spp extends CI_Controller {
     $this->load->view('common/topbar');
     $this->load->view('common/sidebar');
     $this->load->view('common/breadcrumb',$data);
-    $this->load->view('admin/nilai_siswa/rekap_nilai_siswa',$data);
+    $this->load->view('admin/pembayaran_spp/list_pembayaran_per_siswa',$data);
+    $this->load->view('common/footer');
+  }
+
+  function edit($kode){
+    $data['title']="Edit Pembayaran SPP";
+    
+    // $data['kelas']=$this->M_kelas->getKelas();
+    $data['pembayaran'] = $this->db->query("SELECT * FROM pembayaran_spp WHERE kode_pembayaran_spp = '$kode' ")->result_array()[0];
+    
+    $nisn = $data['pembayaran']['nisn'];
+    $idSpp = $data['pembayaran']['id_spp'];
+
+    $data['siswa'] = $this->db->query("SELECT * FROM siswa WHERE nisn = '$nisn'")->result_array()[0];
+
+    $data['nominalSpp'] = $this->db->query("SELECT nominal FROM spp WHERE id_spp = '$idSpp'")->result_array()[0];
+
+    $bulanTerbayar = $this->db->query("SELECT bulan FROM detail_pembayaran_spp WHERE kode_pembayaran_spp = '$kode'")->result_array();
+    $data['telahTerbayar'] = array();
+    foreach ($bulanTerbayar as $value) {
+      array_push($data['telahTerbayar'], $value['bulan']);
+    }
+
+    // $nisn = $data['pembayaran']['nisn'];
+
+    $terbayarDisable = $this->db->query("SELECT d.bulan FROM detail_pembayaran_spp d JOIN pembayaran_spp p ON p.kode_pembayaran_spp = d.kode_pembayaran_spp WHERE d.kode_pembayaran_spp != '$kode' AND p.nisn = '$nisn' ")->result_array();
+    $data['terbayarDisable'] = array();
+
+    foreach ($terbayarDisable as $value) {
+      array_push($data['terbayarDisable'], $value['bulan']);
+    }
+    
+
+    // $data['jadwalPelajaran']=$this->M_jadwal_pelajaran->getJadwalPelajaran();
+    $this->load->view('common/head');
+    $this->load->view('common/topbar');
+    $this->load->view('common/sidebar');
+    $this->load->view('common/breadcrumb',$data);
+    $this->load->view('admin/pembayaran_spp/edit_pembayaran_spp',$data);
+    $this->load->view('common/footer');
+  }
+
+  function update(){
+    $rules =[
+      ['field' => 'nisn',
+      'label' => 'NISN',
+      'rules' => 'required'],
+      
+    ];
+    $this->form_validation->set_rules($rules);
+    if ($this->form_validation->run()==TRUE){
+      $kode = $_POST['kode_pembayaran_spp'];
+
+      $pembayaran_spp = array(
+        // 'kode_pembayaran_spp' => 3,
+        // 'nisn' => $_POST['nisn'],
+        // 'id_spp' => $_POST['id_spp'],
+        // 'id_tahun_akademik' => $_POST['id_tahun_akademik'],
+        'tanggal' => $_POST['tanggal'],
+        'total' => $_POST['total'],
+        'bayar' => $_POST['bayar'],
+      );
+
+      $this->M_pembayaran_spp->update(['kode_pembayaran_spp' => $kode], $pembayaran_spp, 'pembayaran_spp');
+
+      $bulan = $_POST['bulan'];
+
+      $this->M_pembayaran_spp->delete('detail_pembayaran_spp',['kode_pembayaran_spp' => $kode]);
+
+      foreach ($bulan as $key => $value) {
+        $data=[
+          'kode_pembayaran_spp' => $kode,
+          'bulan' => $_POST['bulan'][$key],
+          'nominal' => $_POST['total'] / count($bulan)
+        ];
+        $this->M_pembayaran_spp->insert('detail_pembayaran_spp',$data);
+      }
+      
+      $this->session->set_flashdata("input_success", "<div class='alert alert-success'>
+      <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data berhasil ditambahkan.<br></div>");
+
+    }else {
+      $gagal = validation_errors();
+      $this->session->set_flashdata("input_failed","<div class='alert alert-danger'>
+      <button type='button' class='close' data-dismiss='alert' aria-label='Close'><span aria-hidden='true'>&times;</span></button>Data Gagal Ditambahkan!!<br>".$gagal."</div>");
+    }
+    redirect('Pembayaran_spp');
+  }
+
+  public function laporan()
+  {
+    $data['title']="Laporan Pembayaran SPP";
+    // $data['absensi']=$this->M_absensi->getAbsensi();
+    // $data['kelas']=$this->M_kelas->getKelas();
+    // $data['rombel']=$this->M_rombel->getJoinRombel();
+    // $data['mapel']=$this->M_mapel->getMapel();
+    // $data['tahun_akademik']=$this->M_tahun->getTahun();
+    // $data['kategori_nilai']=$this->M_kategori_nilai->getKategoriNilai();
+    // $data['siswa'] = $this->db->query("SELECT nisn,nama_siswa FROM siswa")->result();
+    if (isset($_GET['dari']) && isset($_GET['sampai'])) {
+      $data['laporan'] = $this->db->query("SELECT p.nisn, s.nama_siswa, p.tanggal, p.total FROM pembayaran_spp p JOIN siswa s ON s.nisn = p.nisn WHERE p.tanggal BETWEEN '$_GET[dari]' AND '$_GET[sampai]'")->result_array();
+    }
+
+    // $data['jadwalPelajaran']=$this->M_jadwal_pelajaran->getJadwalPelajaran();
+    $this->load->view('common/head');
+    $this->load->view('common/topbar');
+    $this->load->view('common/sidebar');
+    $this->load->view('common/breadcrumb',$data);
+    $this->load->view('admin/pembayaran_spp/laporan_pembayaran_spp',$data);
     $this->load->view('common/footer');
   }
 

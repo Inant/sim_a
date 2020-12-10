@@ -77,6 +77,7 @@
     <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-note"></i><span class="hide-menu">Absensi</span></a>
       <ul aria-expanded="false" class="collapse">
         <li><a href="<?php echo base_url()."Absensi" ?>">Input Absensi</a></li>
+        <li><a href="<?php echo base_url()."Absensi/edit" ?>">Edit Absensi</a></li>
         <li><a href="<?php echo base_url()."Absensi/rekap" ?>">Rekap Absensi</a></li>
       </ul>
     </li>
@@ -102,6 +103,8 @@
     <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-media-right-alt"></i><span class="hide-menu">SPP</span></a>
       <ul aria-expanded="false" class="collapse">
         <li><a href="<?php echo base_url(). 'Pembayaran_spp' ?>">Pembayaran SPP</a></li>
+        <li><a href="<?php echo base_url(). 'Pembayaran_spp/pembayaranPerSiswa' ?>">Edit Pembayaran SPP</a></li>
+        <li><a href="<?php echo base_url(). 'Pembayaran_spp/laporan' ?>">Laporan Pembayaran SPP</a></li>
       </ul>
     </li>
     <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="ti-layout-accordion-merged"></i><span class="hide-menu">Tanggungan</span></a>

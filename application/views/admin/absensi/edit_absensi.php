@@ -64,6 +64,13 @@
 
             <div class="col-md-6">
               <div class="form-group">
+                <label for="tanggal">Tanggal</label>
+                <input type="date" name="tanggal" id="tanggal" class="form-control" value="<?= isset($_GET['tanggal']) ? $_GET['tanggal'] : '' ?>" >
+              </div>
+            </div>
+
+            <div class="col-md-6">
+              <div class="form-group">
                 <label for="mapel">Mapel</label>
                 <select name="mapel" id="mapel" class="form-control">
                   <option value=""> --Pilih Mapel-- </option>
@@ -77,23 +84,6 @@
                 </select>
               </div>
             </div>
-
-            <div class="col-md-6">
-              <div class="form-group">
-                <label for="mapel">Kategori Nilai</label>
-                <select name="kategori_nilai" id="kategori_nilai" class="form-control">
-                  <option value=""> --Pilih Kategori Nilai-- </option>
-                  <?php
-                  foreach ($kategori_nilai as $key => $value) {
-                  ?>
-                    <option value="<?= $value->id_kategoriNilai ?>" <?= isset($_GET['kategori_nilai']) && $_GET['kategori_nilai'] == $value->id_kategoriNilai ? 'selected' : '' ?> > <?= $value->nama_kategoriNilai ?> </option>
-                  <?php
-                  }
-                  ?>
-                </select>
-              </div>
-            </div>
-
             <div class="col-md-6"></div>
             <div class="col-md-6">
               <button type="submit" class="btn btn-primary">Submit</button>
@@ -103,35 +93,41 @@
         </form>
         
         <?php
-        if (isset($_GET['kelas']) && isset($_GET['rombel']) && isset($_GET['mapel']) && isset($_GET['kategori_nilai'])) {
+        if (isset($_GET['kelas']) && isset($_GET['rombel']) && isset($_GET['mapel']) && isset($_GET['tanggal'])) {
         ?>
-        <form onsubmit="return validate(this);" action="<?php echo base_url(). 'Nilai_siswa/add'; ?>" method="post">
+        <form onsubmit="return validate(this);" action="<?php echo base_url(). 'Absensi/update'; ?>" method="post">
           <input type="hidden" name="id_kelas" value="<?= $_GET['kelas'] ?>">
           <input type="hidden" name="id_mapel" value="<?= $_GET['mapel'] ?>">
-          <input type="hidden" name="id_tahunAkademik" value="<?= $_GET['tahun_akademik'] ?>">
-          <input type="hidden" name="id_rombel" value="<?= $_GET['rombel'] ?>">
-          <input type="hidden" name="id_kategoriNilai" value="<?= $_GET['kategori_nilai'] ?>">
+          <input type="hidden" name="id_tahun_akademik" value="<?= $_GET['tahun_akademik'] ?>">
+          <input type="hidden" name="id_kelasRombel" value="<?= $_GET['rombel'] ?>">
+          <input type="hidden" name="tanggal_absen" value="<?= $_GET['tanggal'] ?>">
           <div class="table-responsive">
             <table id="myTable" class="table table-bordered" width="100%" cellspacing="0">
               <thead>
                 <tr>
                   <th>NISN</th>
                   <th>Nama Siswa</th>
-                  <th>Nilai</th>
+                  <th>Keterangan</th>
                 </tr>
               </thead>
               <tbody>
                 
                   <?php
                   $i = 0;
-                  foreach ($siswa as $key => $value) {
+                  foreach ($absensi as $key => $value) {
                   ?>
-                    <input type="text" class="hide" name="nisn[]" value="<?=$value->nisn?>">
+                    <input type="text" class="hide" name="id_absensi[]" value="<?=$value->id_absensi?>">
                     <tr>
                       <td><?= $value->nisn ?></td>
                       <td><?= $value->nama_siswa ?></td>
                       <td>
-                        <input type="number" name="nilai[]" min="0" max="100" id="nilai" class="form-control" required>
+                        <input type="radio" name="ket[<?=$i?>]" id="H<?=$i?>" value="H" <?php echo $value->ket == 'H' ? 'checked' : '' ?> ><label for="H<?=$i?>">&nbsp;Hadir</label> &nbsp;
+
+                        <input type="radio" name="ket[<?=$i?>]" id="I<?=$i?>" value="I" <?php echo $value->ket == 'I' ? 'checked' : '' ?>><label for="I<?=$i?>">&nbsp;Izin</label> &nbsp;
+
+                        <input type="radio" name="ket[<?=$i?>]" id="S<?=$i?>" value="S" <?php echo $value->ket == 'S' ? 'checked' : '' ?>><label for="S<?=$i?>">&nbsp;Sakit</label> &nbsp;
+
+                        <input type="radio" name="ket[<?=$i?>]" id="A<?=$i?>" value="A" <?php echo $value->ket == 'A' ? 'checked' : '' ?>><label for="A<?=$i?>">&nbsp;Alpha</label> &nbsp;
                       </td>
                     </tr>
                   <?php

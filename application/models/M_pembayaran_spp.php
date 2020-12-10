@@ -7,6 +7,16 @@ class M_pembayaran_spp extends CI_Model
 
     $this->db->insert($table, $data);
   }
+
+  function update($where,$data,$table){
+    $this->db->where($where);
+    $this->db->update($table,$data);
+  }
+
+  function delete($table, $where){
+    $this->db->where($where);
+    $this->db->delete($table);
+  }
   // function edit_data($where)
   // {
   //   return $this->db->get_where('spp', $where)->result();

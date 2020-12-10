@@ -92,84 +92,84 @@
             <div class="col-md-2 mb-3">
               <div class="form-check">
                 <input type="checkbox" class="form-check-input bulan" id="7" value="7" name="bulan[]" <?php echo in_array(7, $telahTerbayar) ? 'disabled' : '' ?> >
-                <label class="form-check-label" for="7">Juli</label>
+                <label class="form-check-label <?php echo in_array(7, $telahTerbayar) ? 'text-success' : '' ?>" for="7">Juli</label>
               </div>
             </div>
             
             <div class="col-md-2 mb-3">
               <div class="form-check">
                 <input type="checkbox" class="form-check-input bulan" id="8" value="8" name="bulan[]" <?php echo in_array(8, $telahTerbayar) ? 'disabled' : '' ?> >
-                <label class="form-check-label" for="8">Agustus</label>
+                <label class="form-check-label <?php echo in_array(8, $telahTerbayar) ? 'text-success' : '' ?>" for="8">Agustus</label>
               </div>
             </div>
             
             <div class="col-md-2 mb-3">
               <div class="form-check">
                 <input type="checkbox" class="form-check-input bulan" id="9" value="9" name="bulan[]" <?php echo in_array(9, $telahTerbayar) ? 'disabled' : '' ?>>
-                <label class="form-check-label" for="9">September</label>
+                <label class="form-check-label <?php echo in_array(9, $telahTerbayar) ? 'text-success' : '' ?> " for="9">September</label>
               </div>
             </div>
 
             <div class="col-md-2 mb-3">
               <div class="form-check">
                 <input type="checkbox" class="form-check-input bulan" id="10" value="10" name="bulan[]" <?php echo in_array(10, $telahTerbayar) ? 'disabled' : '' ?>>
-                <label class="form-check-label" for="10">Oktember</label>
+                <label class="form-check-label <?php echo in_array(10, $telahTerbayar) ? 'text-success' : '' ?>" for="10">Oktember</label>
               </div>
             </div>
 
             <div class="col-md-2 mb-3">
               <div class="form-check">
                 <input type="checkbox" class="form-check-input bulan" id="11" value="11" name="bulan[]" <?php echo in_array(11, $telahTerbayar) ? 'disabled' : '' ?>>
-                <label class="form-check-label" for="11">November</label>
+                <label class="form-check-label <?php echo in_array(11, $telahTerbayar) ? 'text-success' : '' ?>" for="11">November</label>
               </div>
             </div>
 
             <div class="col-md-2 mb-3">
               <div class="form-check">
                 <input type="checkbox" class="form-check-input bulan" id="12" value="12" name="bulan[]" <?php echo in_array(12, $telahTerbayar) ? 'disabled' : '' ?>>
-                <label class="form-check-label" for="12">Desember</label>
+                <label class="form-check-label <?php echo in_array(12, $telahTerbayar) ? 'text-success' : '' ?>" for="12">Desember</label>
               </div>
             </div>
 
             <div class="col-md-2 mb-3">
               <div class="form-check">
                 <input type="checkbox" class="form-check-input bulan" id="1" value="1" name="bulan[]" <?php echo in_array(1, $telahTerbayar) ? 'disabled' : '' ?>>
-                <label class="form-check-label" for="1">Januari</label>
+                <label class="form-check-label <?php echo in_array(1, $telahTerbayar) ? 'text-success' : '' ?>" for="1">Januari</label>
               </div>
             </div>
 
             <div class="col-md-2 mb-3">
               <div class="form-check">
                 <input type="checkbox" class="form-check-input bulan" id="2" value="2" name="bulan[]" <?php echo in_array(2, $telahTerbayar) ? 'disabled' : '' ?>>
-                <label class="form-check-label" for="2">Februari</label>
+                <label class="form-check-label <?php echo in_array(2, $telahTerbayar) ? 'text-success' : '' ?>" for="2">Februari</label>
               </div>
             </div>
 
             <div class="col-md-2 mb-3">
               <div class="form-check">
                 <input type="checkbox" class="form-check-input bulan" id="3" value="3" name="bulan[]" <?php echo in_array(3, $telahTerbayar) ? 'disabled' : '' ?>>
-                <label class="form-check-label" for="3">Maret</label>
+                <label class="form-check-label <?php echo in_array(3, $telahTerbayar) ? 'text-success' : '' ?>" for="3">Maret</label>
               </div>
             </div>
 
             <div class="col-md-2 mb-3">
               <div class="form-check">
                 <input type="checkbox" class="form-check-input bulan" id="4" value="4" name="bulan[]" <?php echo in_array(4, $telahTerbayar) ? 'disabled' : '' ?>>
-                <label class="form-check-label" for="4">April</label>
+                <label class="form-check-label <?php echo in_array(4, $telahTerbayar) ? 'text-success' : '' ?>" for="4">April</label>
               </div>
             </div>
 
             <div class="col-md-2 mb-3">
               <div class="form-check">
                 <input type="checkbox" class="form-check-input bulan" id="5" value="5" name="bulan[]" <?php echo in_array(5, $telahTerbayar) ? 'disabled' : '' ?>>
-                <label class="form-check-label" for="5">Mei</label>
+                <label class="form-check-label <?php echo in_array(5, $telahTerbayar) ? 'text-success' : '' ?>" for="5">Mei</label>
               </div>
             </div>
 
             <div class="col-md-2 mb-3">
               <div class="form-check">
                 <input type="checkbox" class="form-check-input bulan" id="6" value="6" name="bulan[]" <?php echo in_array(6, $telahTerbayar) ? 'disabled' : '' ?>>
-                <label class="form-check-label" for="6">Juni</label>
+                <label class="form-check-label <?php echo in_array(6, $telahTerbayar) ? 'text-success' : '' ?>" for="6">Juni</label>
               </div>
             </div>
 

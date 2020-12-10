@@ -31,10 +31,15 @@ class M_absensi extends CI_Model
         }
     }
 
-  function updateAbsensi($where,$data,$table){
+    function updateAbsensi($where, $data)
+    {
       $this->db->where($where);
-      $this->db->update($table,$data);
-  }
+      if ($this->db->update($this->_table, $data) == TRUE) {
+        return TRUE;
+      } else {
+        return FALSE;
+      }
+    }
     function deleteAbsensi($where)
     {
         $this->db->where($where);
