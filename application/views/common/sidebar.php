@@ -85,6 +85,7 @@
     <li> <a class="has-arrow waves-effect waves-dark" href="javascript:void(0)" aria-expanded="false"><i class="icon-note"></i><span class="hide-menu">Nilai Siswa</span></a>
       <ul aria-expanded="false" class="collapse">
         <li><a href="<?php echo base_url()."Nilai_siswa" ?>">Input Nilai Siswa</a></li>
+        <li><a href="<?php echo base_url()."Nilai_siswa/edit" ?>">Edit Nilai Siswa</a></li>
         <li><a href="<?php echo base_url()."Nilai_siswa/rekap" ?>">Rekap Nilai Siswa</a></li>
       </ul>
     </li>

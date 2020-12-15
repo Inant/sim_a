@@ -15,7 +15,21 @@
         
         <form action="" method="get">
           <div class="row">
-            
+            <div class="col-md-6">
+              <div class="form-group">
+                <label for="kelas">Tahun Akemik</label>
+                <select name="tahun_akademik" id="tahun_akademik" class="form-control">
+                  <option value=""> --Pilih Tahun Akademik-- </option>
+                  <?php
+                  foreach ($tahun_akademik as $key => $value) {
+                  ?>
+                    <option value="<?= $value->id_tahun_akademik ?>" <?= isset($_GET['tahun_akademik']) && $_GET['tahun_akademik'] == $value->id_tahun_akademik ? 'selected' : '' ?> > <?= $value->tahun_akademik . ' ' . $value->semester ?> </option>
+                  <?php
+                  }
+                  ?>
+                </select>
+              </div>
+            </div>
             <div class="col-md-6">
               <div class="form-group">
                 <label for="kelas">Kelas</label>
@@ -50,13 +64,13 @@
 
             <div class="col-md-6">
               <div class="form-group">
-                <label for="nisn">Siswa</label>
-                <select name="nisn" id="nisn" class="form-control">
+                <label for="nis">Siswa</label>
+                <select name="nis" id="nis" class="form-control">
                   <option value=""> --Pilih Siswa-- </option>
                   <?php
                   foreach ($siswa as $key => $value) {
                   ?>
-                    <option value="<?= $value->nisn ?>" <?= isset($_GET['nisn']) && $_GET['nisn'] == $value->nisn ? 'selected' : '' ?> > <?= $value->nisn . ' - ' . $value->nama_siswa ?> </option>
+                    <option value="<?= $value->nis ?>" <?= isset($_GET['nis']) && $_GET['nis'] == $value->nis ? 'selected' : '' ?> > <?= $value->nis . ' - ' . $value->nama_siswa ?> </option>
                   <?php
                   }
                   ?>
@@ -72,7 +86,7 @@
         </form>
         
         <?php
-        if (isset($_GET['kelas']) && isset($_GET['rombel']) && isset($_GET['nisn'])) {
+        if (isset($_GET['kelas']) && isset($_GET['rombel']) && isset($_GET['nis'])) {
           
           // echo "<pre>";
           // print_r ($absen);
@@ -92,8 +106,6 @@
                 <th style="vertical-align: middle;text-align:center">Kategori Nilai</th>
                 <th style="vertical-align: middle;text-align:center">Nilai</th>
                 <th style="vertical-align: middle;text-align:center">Ket</th>
-                <th style="vertical-align: middle;text-align:center">Tahun</th>
-                <th style="vertical-align: middle;text-align:center">Semester</th>
               </tr>
             </thead>
             <tbody>
@@ -109,8 +121,6 @@
                   <td><?=$value->nama_kategoriNilai?></td>
                   <td><?=$value->nilai?></td>
                   <td><?=$value->ket?></td>
-                  <td><?=$value->tahun_akademik?></td>
-                  <td><?=$value->semester ?></td>
                 </tr>
               <?php
               }

@@ -105,7 +105,7 @@
         <?php
         if (isset($_GET['kelas']) && isset($_GET['rombel']) && isset($_GET['mapel']) && isset($_GET['kategori_nilai'])) {
         ?>
-        <form onsubmit="return validate(this);" action="<?php echo base_url(). 'Nilai_siswa/add'; ?>" method="post">
+        <form onsubmit="return validate(this);" action="<?php echo base_url(). 'Nilai_siswa/update'; ?>" method="post">
           <input type="hidden" name="id_kelas" value="<?= $_GET['kelas'] ?>">
           <input type="hidden" name="id_mapel" value="<?= $_GET['mapel'] ?>">
           <input type="hidden" name="id_tahunAkademik" value="<?= $_GET['tahun_akademik'] ?>">
@@ -115,7 +115,7 @@
             <table id="myTable" class="table table-bordered" width="100%" cellspacing="0">
               <thead>
                 <tr>
-                  <th>NISN</th>
+                  <th>NIS</th>
                   <th>Nama Siswa</th>
                   <th>Nilai</th>
                 </tr>
@@ -124,14 +124,14 @@
                 
                   <?php
                   $i = 0;
-                  foreach ($siswa as $key => $value) {
+                  foreach ($nilai as $key => $value) {
                   ?>
-                    <input type="text" class="hide" name="nis[]" value="<?=$value->nis?>">
+                    <input type="text" class="hide" name="id_nilai[]" value="<?=$value->id_nilai?>">
                     <tr>
                       <td><?= $value->nis ?></td>
                       <td><?= $value->nama_siswa ?></td>
                       <td>
-                        <input type="number" name="nilai[]" min="0" max="100" id="nilai" class="form-control" required>
+                        <input type="number" name="nilai[]" min="0" max="100" id="nilai" class="form-control" value="<?=$value->nilai?>" required>
                       </td>
                     </tr>
                   <?php

@@ -121,7 +121,7 @@
                       <td><?= $value->nisn ?></td>
                       <td><?= $value->nama_siswa ?></td>
                       <td>
-                        <input type="radio" name="ket[<?=$i?>]" id="H<?=$i?>" value="H"><label for="H<?=$i?>">&nbsp;Hadir</label> &nbsp;
+                        <input type="radio" checked name="ket[<?=$i?>]" id="H<?=$i?>" value="H"><label for="H<?=$i?>">&nbsp;Hadir</label> &nbsp;
                         <input type="radio" name="ket[<?=$i?>]" id="I<?=$i?>" value="I"><label for="I<?=$i?>">&nbsp;Izin</label> &nbsp;
                         <input type="radio" name="ket[<?=$i?>]" id="S<?=$i?>" value="S"><label for="S<?=$i?>">&nbsp;Sakit</label> &nbsp;
                         <input type="radio" name="ket[<?=$i?>]" id="A<?=$i?>" value="A"><label for="A<?=$i?>">&nbsp;Alpha</label> &nbsp;
